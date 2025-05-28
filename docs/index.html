@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Unifikator</title>  
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2em;
+      background-color: #f7f9fc;
+    }
+    h1 {
+      color: #4a90e2;
+      margin-bottom: 0.5em;
+    }
+    .controls-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+      gap: 1em 2em;
+      align-items: center;
+      margin-bottom: 1.5em;
+    }
+    .controls-group label {
+      margin: 0;
+    }
+    .controls-group .checkbox {
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+    }
+    input[type="text"], input[type="number"], select {
+      width: 100%;
+      padding: 0.3em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    textarea {
+      width: 100%;
+      padding: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: none;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 0.5em 1em;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 1em;
+    }
+    button:hover {
+      background-color: #357ABD;
+    }
+    .container {
+      display: flex;
+      gap: 2em;
+      align-items: stretch;
+    }
+    .panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel h2 {
+      margin-top: 0;
+    }
+    .panel textarea {
+      flex: 1;
+      min-height: 50em;
+    }
+    .error {
+      color: red;
+      white-space: pre;
+      background: #fdd;
+      padding: 1em;
+      margin-top: 1em;
+    }
+  </style>
+  <script type="module" crossorigin src="/assets/index-1e7020d2.js"></script>
+</head>
+<body>
+  <h1>Unifikator</h1>
+  <div class="controls-group">
+    <label>
+      Distance threshold:
+      <input type="number" step="0.01" id="distanceThreshold" value="0.35">
+    </label>
+    <label>
+      Distance metric:
+      <select id="distanceMetric">
+        <option value="levenshtein">levenshtein</option>
+        <option value="jaro_winkler">jaro_winkler</option>
+        <option value="token_set_ratio" selected>token_set_ratio</option>
+      </select>
+    </label>
+    <label>
+      Cluster linkage:
+      <select id="clusterLinkage">
+        <option value="average" selected>average</option>
+        <option value="single">single</option>
+        <option value="complete">complete</option>
+      </select>
+    </label>
+    <label>
+      Representative strategy:
+      <select id="representativeStrategy">
+        <option value="medoid" selected>medoid</option>
+        <option value="shortest">shortest</option>
+        <option value="longest">longest</option>
+        <option value="first_alphabetical">first_alphabetical</option>
+      </select>
+    </label>
+    <div class="checkbox">
+      <label><input type="checkbox" id="lowercase" checked> Lowercase</label>
+    </div>
+    <label>
+      Strip characters (edges):
+      <input type="text" id="stripChars" value=" .-,()[]{}">
+    </label>
+    <label>
+      Remove internal characters:
+      <input type="text" id="removeInternalChars" value=".,-()[]{}">
+    </label>
+    <label>
+      Minimum cluster size for representation change:
+      <input type="number" id="minClusterSize" value="1">
+    </label>
+    <label>
+      Preprocessor JS code:
+      <input type="text" id="preprocessorCode" placeholder="e.g. x => x">
+    </label>
+  </div>
+  <button id="unifyBtn">Unify</button>
+  <div id="error" class="error" hidden></div>
+  <div class="container">
+    <div class="panel">
+      <h2>Values (one per line)</h2>
+      <textarea id="valuesInput"></textarea>
+    </div>
+    <div class="panel">
+      <h2>Result</h2>
+      <textarea id="resultOutput" readonly></textarea>
+    </div>
+  </div>
+  
+</body>
+</html>
